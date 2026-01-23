@@ -1,4 +1,10 @@
+#Reference : This project UI is taken and inspire from Jonas Schmedtmann who is a instructor from portugal and i develope backend  and some frontend logic to make it full-stack project.
+
+
 # Kasturi Bank (Demo)
+project overview
+
+
 
 Small demo banking app with Node/Express backend and static frontend.
 
