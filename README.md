@@ -6,24 +6,49 @@ project overview
 
 ## Demo Preview
 
-- Demo video:
+#APP credentials for demo
 
-  <video controls width="720">
-    <source src="frontend/images/bank-demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+1. email : jonas@example.com
+   password : password123
+
+2. email:jessica@example.com
+   password : password123
+
+3. email:michael@example.com
+   password:password123
+
+4. email:sofia@example.com
+   password:password123
+
+5. email: liam@example.com
+   password:password123
+
+6. email:ava@example.com
+   password:password123
+
+7. email:noah@example.com
+   password:password123
+
+8. email:emma@example.com
+   password:password123
+
+9. email:oliver"example.com
+   password:password123
+
+10. email:mia@example.com
+    password:password123
 
 - Preview images:
 
-  <p>
-    <img src="frontend/images/desktop-dashboard.png" alt="Desktop dashboard" width="350" />
-    <img src="frontend/images/desktop-home.png" alt="Desktop home" width="350" />
-  </p>
+      <p>
+        <img src="frontend/images/desktop-dashboard.png" alt="Desktop dashboard" width="350" />
+        <img src="frontend/images/desktop-home.png" alt="Desktop home" width="350" />
+      </p>
 
-  <p>
-    <img src="frontend/images/mobile-dashboard.png" alt="Mobile dashboard" width="180" />
-    <img src="frontend/images/mobile-home.png" alt="Mobile home" width="180" />
-  </p>
+      <p>
+        <img src="frontend/images/mobile-dashboard.png" alt="Mobile dashboard" width="180" />
+        <img src="frontend/images/mobile-home.png" alt="Mobile home" width="180" />
+      </p>
 
 Small demo banking app with Node/Express backend and static frontend.
 
@@ -36,15 +61,15 @@ Overview
 Repository structure
 
 - `backend/` — server code
-  - `server.js` — entry
-  - `src/app.js` — express app and route mounting
-  - `src/controller/` — controllers (including `auth.controller.js`, `seed.controller.js`)
-  - `src/routes/` — routes (`auth.routes.js`, `seed.routes.js`)
-  - `src/model/` — Mongoose models (`user.model.js`, `movement.model.js`)
-  - `data/fake-data.json` — seed data used by `/api/v1/seed/import`
+    - `server.js` — entry
+    - `src/app.js` — express app and route mounting
+    - `src/controller/` — controllers (including `auth.controller.js`, `seed.controller.js`)
+    - `src/routes/` — routes (`auth.routes.js`, `seed.routes.js`)
+    - `src/model/` — Mongoose models (`user.model.js`, `movement.model.js`)
+    - `data/fake-data.json` — seed data used by `/api/v1/seed/import`
 - `frontend/` — static UI
-  - `app.html`, `app.js`, `app.css` — main bank app
-  - `index.html` — (login/signup page) — see project files
+    - `app.html`, `app.js`, `app.css` — main bank app
+    - `index.html` — (login/signup page) — see project files
 
 Prerequisites
 
@@ -86,21 +111,21 @@ API (summary)
 - All endpoints are prefixed with `/api/v1` per `src/app.js`.
 
 - Auth
-  - `POST /api/v1/auth/signup` — create user
-    - body: `{ name, email, password, confirmPassword, amount }` (amount optional — creates initial movement)
-  - `POST /api/v1/auth/login` — login
-    - body: `{ email, password }`
-    - Response sets `token` cookie (httpOnly). Frontend uses `credentials: 'include'`.
-  - `GET /api/v1/auth/logout` — clears auth cookie
-  - `GET /api/v1/auth/me` — get current user + populated `movement` list (protected)
+    - `POST /api/v1/auth/signup` — create user
+        - body: `{ name, email, password, confirmPassword, amount }` (amount optional — creates initial movement)
+    - `POST /api/v1/auth/login` — login
+        - body: `{ email, password }`
+        - Response sets `token` cookie (httpOnly). Frontend uses `credentials: 'include'`.
+    - `GET /api/v1/auth/logout` — clears auth cookie
+    - `GET /api/v1/auth/me` — get current user + populated `movement` list (protected)
 
 - Account operations (protected; require cookie)
-  - `POST /api/v1/auth/transfer` — transfer to another user
-    - body: `{ toEmail, amount }`
-  - `POST /api/v1/auth/loan` — request loan
-    - body: `{ amount }` — simple eligibility rule: grant if any past deposit >= 10% of requested amount
-  - `DELETE /api/v1/auth/close` — close account
-    - body: `{ email, password }` — verifies and deletes user and movements
+    - `POST /api/v1/auth/transfer` — transfer to another user
+        - body: `{ toEmail, amount }`
+    - `POST /api/v1/auth/loan` — request loan
+        - body: `{ amount }` — simple eligibility rule: grant if any past deposit >= 10% of requested amount
+    - `DELETE /api/v1/auth/close` — close account
+        - body: `{ email, password }` — verifies and deletes user and movements
 
 Notes about auth and cookies
 
@@ -110,19 +135,19 @@ Notes about auth and cookies
 Data models
 
 - User (see `backend/src/model/user.model.js`):
-  - name, email, password (hashed), confirmPassword (validation), interestRate, passwordChangedAt
-  - virtual `movement` references Movement documents
+    - name, email, password (hashed), confirmPassword (validation), interestRate, passwordChangedAt
+    - virtual `movement` references Movement documents
 - Movement (see `backend/src/model/movement.model.js`):
-  - amount (Number), date (Date), user: ObjectId -> `User`
+    - amount (Number), date (Date), user: ObjectId -> `User`
 
 Frontend
 
 - `frontend/app.html` and `frontend/app.js` implement the app view.
-  - On load `app.js` requests `/auth/me` and renders movements, balance, and summary.
-  - Movement entries show formatted amounts and dates using `Intl.NumberFormat` and `Intl.DateTimeFormat`.
-  - Sorting is available via the SORT button (toggles ascending/descending by amount).
-  - Transfer, Loan, and Close account operations call the respective backend endpoints and refresh the UI.
-  - There's an inactivity logout timer shown in the UI (`.timer`) that logs out after 5 minutes of inactivity.
+    - On load `app.js` requests `/auth/me` and renders movements, balance, and summary.
+    - Movement entries show formatted amounts and dates using `Intl.NumberFormat` and `Intl.DateTimeFormat`.
+    - Sorting is available via the SORT button (toggles ascending/descending by amount).
+    - Transfer, Loan, and Close account operations call the respective backend endpoints and refresh the UI.
+    - There's an inactivity logout timer shown in the UI (`.timer`) that logs out after 5 minutes of inactivity.
 
 Developer notes
 
@@ -145,9 +170,9 @@ Note: to persist cookies across curl calls use `-c cookies.txt` and `-b cookies.
 Troubleshooting
 
 - If frontend cannot fetch `/auth/me`, ensure:
-  - backend is running on port 3000
-  - browser fetch includes credentials and server CORS allows your frontend origin
-  - auth cookie present in the browser
+    - backend is running on port 3000
+    - browser fetch includes credentials and server CORS allows your frontend origin
+    - auth cookie present in the browser
 
 Future improvements
 

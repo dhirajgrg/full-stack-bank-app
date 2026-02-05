@@ -1,15 +1,25 @@
-const mongoose = require("mongoose");
+//===========================================
+const dns = require('node:dns');
+// Set Node's DNS servers to Google's Public DNS
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+//============================================
 
-const connectDB = async function () {
-  try {
-   
-    await mongoose.connect(process.env.MONGO_URI);
+const mongoose = require('mongoose');
 
-    console.log("MongoDB connected");
-  } catch (err) {
-    console.error("failed to connect db ", err);
-    process.exit(1); 
-  }
+// Ensure MONGO_URI and DB_PASSWORD exist before trying to replace
+const dbUrl = process.env.MONGO_URI.replace(
+	'<db_password>',
+	process.env.DB_PASSWORD
+);
+
+const connectDB = async () => {
+	try {
+		const conn = await mongoose.connect(dbUrl);
+		console.log(`DB connected successfully!!!`);
+	} catch (error) {
+		console.error('Unable to connect DB:', error.message);
+		process.exit(1);
+	}
 };
 
 module.exports = connectDB;
