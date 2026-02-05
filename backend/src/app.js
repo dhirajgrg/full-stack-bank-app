@@ -13,10 +13,14 @@ app.use(cookieParser());
 
 // request logger (dev)
   app.use(morgan("dev"));
-  app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Change this to your frontend URL
-    credentials: true // Required to send cookies/tokens
-}));
+app.use(
+	cors({
+		origin:
+			process.env.FRONTEND_URL ||
+			'https://full-stack-bank-app.onrender.com',
+		credentials: true
+	})
+);
 
 
 // routes
